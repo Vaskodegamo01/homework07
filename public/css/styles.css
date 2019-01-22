@@ -1,0 +1,37 @@
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: inherit;}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#result_form {
+    display: block;
+}
+.massage {
+  background-color: #c0c0c0;
+  color: black;
+  margin: 5px;
+  padding: 5px;
+} 
+.massage_who {
+ text-align: left;
+ font-family: 'Times New Roman', Times, serif; /* Гарнитура текста */ 
+ font-size: 150%; /* Размер шрифта в процентах */
+} 
+.massage_text {
+text-align:center;
+font-family: Verdana, Arial, Helvetica, sans-serif; 
+font-size: 11pt; /* Размер шрифта в пунктах */ 
+} 
+.massage_time {
+text-align: right;
+font-family: Verdana, Arial, Helvetica, sans-serif; 
+font-size: 8pt; /* Размер шрифта в пунктах */ 
+} 
+
+#text_send {
+	width:100%;
+    border: 1px; padding: 30px; margin:1px
+  }
+
