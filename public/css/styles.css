@@ -8,6 +8,10 @@ ul {
 #result_form {
     display: block;
 }
+.preview_image{
+    width: 300px;
+    height: auto;
+}
 .massage {
   background-color: #c0c0c0;
   color: black;
@@ -34,4 +38,3 @@ font-size: 8pt; /* Размер шрифта в пунктах */
 	width:100%;
     border: 1px; padding: 30px; margin:1px
   }
-

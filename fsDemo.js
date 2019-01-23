@@ -13,17 +13,20 @@ export default {
                     let file = [];
                     let thirtyFiles = files.reverse();
                     for(let i=0; i<30; i++) {
-                        file.push(thirtyFiles[i]);
+                        if(thirtyFiles[i]){
+                            file.push(thirtyFiles[i]);
+                        }
+
                     }
                     file.sort((a,b) => (a > b) ? 1 : ((b> a) ? -1 : 0));
-                    file.forEach(file => {
-                        fs.readFile(path + file, "utf8", (err, res) => {
+                    file.forEach(file1 => {
+                        fs.readFile(path + file1, "utf8", (err, res) => {
                             if (err) {
                                 throw err;
                             }
                             this.data.push(JSON.parse(res)[0]);
                             ++control;
-                            if (control === 30) {  //читаем 30 файлов
+                            if (control === file.length) {
                                 callback();
                             }
                         });
@@ -68,9 +71,8 @@ export default {
     addItem(item){
         this.data.push(item);
     },
-    saveData(callback){
-        let now = new Date();
-        fs.writeFile(path + now.toISOString() + ".txt", JSON.stringify(this.data), err => {
+    saveData(callback,isodata){
+        fs.writeFile(path + isodata + ".txt", JSON.stringify(this.data), err => {
             if (err) throw err;
         });
         callback();

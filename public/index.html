@@ -12,17 +12,21 @@
 	<body onload="runapp()">
 	<div id="result_form"></div>
 <div id="text_send">
-<form method="post" id="ajax_form" action="" >
+<form method="post" id="ajax_form" action="">
 	<div class="form-group">
 	<label for="author">Author</label>
     <input type="text" class="form-control" id="author" name="author" value="Vasilii">
 	</div>
 	<div class="form-group">
 	<label for="message">Message</label>
-	<input type="text" class="form-control" id="message" name="message" value="blablabla">
+		<textarea class="form-control" rows="2" placeholder="Добавьте Ваше сообщение" id="message" name="message" required></textarea>
+	</div>
+	<div class="form-group">
+		<label for="image">Image</label>
+		<input type="file" class="form-control" name="image" id="image">
 	</div>
 	<div style="overflow: hidden; padding-right: .5em;">
-	<input type="button" id="btn" class="btn btn-primary" value="Отправить">
+	<input type="submit" id="btn" class="btn btn-primary" value="Отправить">
 	</div>
 </form>
 </div>

@@ -2,36 +2,30 @@ let url = "http://127.0.0.1:3333/messages";
 lastdatatime = new Date();
 queryparam = {"datatime" : window.lastdatatime};
 
-$( document ).ready(function() {
-    $("#btn").click(
-        function(){
-            let idForm = $("#ajax_form");
-            let idResultForm = $("#result_form");
-            sendAjaxForm(idResultForm, idForm, url);
-            return false;
+$(()=>{
+
+    $("#btn").click((e)=>{
+        let idForm = $("#ajax_form");
+        if(!idForm[0].checkValidity()){
+            $('<input type="submit">').hide().appendTo(idForm).click().remove();
+            return;
         }
-    );
+        e.preventDefault();
+        let idResultForm = $("#result_form");
+        sendAjaxForm(idResultForm, idForm, url);
+        return false;
+    });
 });
 
-function getFormData($form){
-    let unindexed_array = $form.serializeArray();
-    let indexed_array = {};
-    $.map(unindexed_array, function(n){
-        indexed_array[n['name']] = n['value'];
-    });
-    return indexed_array;
-}
+
 function sendAjaxForm(result_form, ajax_form, url) {
+    const data = new FormData(document.getElementById("ajax_form"));
     $.ajax({
-        beforeSend: function(xhrObj){
-            xhrObj.setRequestHeader("Content-Type","application/json");
-            xhrObj.setRequestHeader("Accept","application/json");
-        },
         url: url, //url страницы
         type: "POST", //метод отправки
-        dataType: "json",
-        data: JSON.stringify(getFormData(ajax_form)),
+        data: data,
         processData: false,
+        contentType: false,
         success: function(response) { //Данные отправлены успешно
             result = JSON.stringify(response);
             result_form.html('Данные отправлены успешно' + "<br>" + result);
@@ -59,28 +53,49 @@ function runapp() {
 }
 
 function list(result) {
+    if(result[0] != null){
     let items = '<ul>';
     let div = $("#mydiv");
     if(result.length >= 30 ){
         result.reverse().forEach((el) => {
+            if(el.author==="") el.author = "anonymous";
+            items += '<div class="media-block">';
+            if(el.image) {
+                items += '<div>';
+                items += '<img class="preview_image" src=http://localhost:3333/uploads/' + el.image + 'alt="">';
+                items += '</div>';
+            }
+            items += '<div>';
             items += '<ul class="massage">';
             items += '<li class="massage_who">' + el.author + '</li>';
             items += '<li class="massage_text">' + el.message + '</li>';
             items += '<li class="massage_time">' + el.datetime.split('T')[0] + " " + el.datetime.split('T')[1].split('.')[0] + '</li>';
             items += '</ul>';
+            items += '</div>';
+            items += '</div>';
         });
         items += '</ul>';
         div.html(items);
     }else{
           result.reverse().forEach((el) => {
-            items += '<ul class="massage">';
-            items += '<li class="massage_who">' + el.author + '</li>';
-            items += '<li class="massage_text">' + el.message + '</li>';
-            items += '<li class="massage_time">' + el.datetime.split('T')[0] + " " + el.datetime.split('T')[1].split('.')[0] + '</li>';
-            items += '</ul>';
+              if(el.author==="") el.author = "anonymous";
+              items += '<div>';
+              if(el.image) {
+                  items += '<div>';
+                  items += '<img class="preview_image" src=http://localhost:3333/uploads/' + el.image + ' alt="">';
+                  items += '</div>';
+              }
+              items += '<div>';
+              items += '<ul class="massage">';
+              items += '<li class="massage_who">' + el.author + '</li>';
+              items += '<li class="massage_text">' + el.message + '</li>';
+              items += '<li class="massage_time">' + el.datetime.split('T')[0] + " " + el.datetime.split('T')[1].split('.')[0] + '</li>';
+              items += '</ul>';
+              items += '</div>';
+              items += '</div>';
         });
         items += '</ul>';
         items += div.html();
         div.html(items);
     }
-}
+}}

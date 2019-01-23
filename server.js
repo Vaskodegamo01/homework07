@@ -9,6 +9,6 @@ const port = 3333;
 app.use(cors());
 app.use(express.static('public'));
 app.use(express.json());
-app.use("/", messages);
+app.use("/messages", messages);
 
 app.listen(port, () => console.log("server start at " + port));
